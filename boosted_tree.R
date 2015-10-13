@@ -5,9 +5,8 @@
 library("adabag")
 library("zoo")
 
-rm(list = setdiff(ls(), lsf.str()))
-loan_dat <- read.csv("/home/reza/LendUp/LoanStats3b.csv",
-  skip = 1, header = TRUE, stringsAsFactors = FALSE)
+loan_dat <- read.csv("LoanStats3b.csv", skip = 1,
+  header = TRUE, stringsAsFactors = FALSE)
 
 numeric_cols <- c("loan_amnt", "installment", "dti", 
   "delinq_2yrs", "inq_last_6mths", "open_acc",
@@ -270,13 +269,13 @@ boosting_model <- function(xtrain, ytrain, xtest,
 # The plot shows 23 is the best value for maxDepth.
 # I use this value of maxDepth in my model to predict the
 # labels for the test data. Here is the test error for that.
-predic <- boosting_model(x_train[,-1], y_train[,-1], 
-  x_test[,-1], y_test[,-1], 5)
+#predic <- boosting_model(x_train[,-1], y_train[,-1], 
+#  x_test[,-1], y_test[,-1], 5)
 
-I <- (predic$prob[,2]+logist_predic3)/2
-I <- (I > 0.5)
+#I <- (predic$prob[,2]+logist_predic3)/2
+#I <- (I > 0.5)
 
-print(mean(I != as.numeric(y_test[,-1]))) # the error: 0.05978716
+#print(mean(I != as.numeric(y_test[,-1]))) # the error: 0.05978716
  
 # Here is the prediction on the data points with label
 # "Current" or "In Grace Period". Here 1 represents
@@ -284,11 +283,12 @@ print(mean(I != as.numeric(y_test[,-1]))) # the error: 0.05978716
 # I dont have teh true labels for test_dat for now
 # I have set it to y_test[,-1]. But you can use your
 # predictions from your modeland check it against my model.
-#predic <- boosting_model(x_dat[,-1], y_dat[,-1], 
-#  test_dat, y_test[,-1], 23)
+
+predic <- boosting_model(x_dat[,-1], y_dat[,-1], 
+  test_dat, y_test[,-1], 23)
   
-#I <- (predic$prob[,2]+logist_predic1)/2
-#final_predic <- (I > 0.5)
-#sum(final_predic == 1) 
+I <- (predic$prob[,2]+logist_predic1)/2
+final_predic <- (I > 0.5)
+sum(final_predic == 1) 
 
 
