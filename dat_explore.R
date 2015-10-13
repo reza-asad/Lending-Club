@@ -5,8 +5,8 @@
 library("googleVis")
 
 # get the data
-loan_dat <- read.csv("/home/reza/LendUp/LoanStats3b.csv",
-  skip = 1, header = TRUE, stringsAsFactors = FALSE)
+loan_dat <- read.csv("LoanStats3b.csv", skip = 1,
+  header = TRUE, stringsAsFactors = FALSE)
 
 # The fields int_rate and revol_util contain string
 # of percent value. This converts string of percent
